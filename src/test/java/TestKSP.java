@@ -21,12 +21,10 @@ import Pages.ItemPage;
 import Pages.Login;
 import Pages.PersonalInfo;
 import Pages.ResultsPage;
-import Pages.SearchPage;
 import Pages.StockPage;
 
 public class TestKSP {
 	WebDriver driver;
-	SearchPage search;
 	ResultsPage result;
 	ItemPage items;
 	StockPage stock;
@@ -57,6 +55,7 @@ public class TestKSP {
 	public void beforeMethod() {
 		driver.get("https://ksp.co.il/web/");
 		takeScr = new TakeScreenShot(driver);
+		home = new HomePage(driver);
 	}
 
 	@DataProvider(name = "Data")
@@ -74,8 +73,7 @@ public class TestKSP {
 
 	@Test(dataProvider = "Data")
 	public void test1(String item) throws InterruptedException, IOException {
-		search = new SearchPage(driver);
-		search.searchItem(item);
+		home.searchItem(item);
 		result = new ResultsPage(driver);
 		result.Click();
 		takeScr.takeScreenShot("./ScreenShots/"+item+"Search"+".png");
@@ -99,7 +97,6 @@ public class TestKSP {
 
 	@Test(dependsOnMethods = "test1")
 	public void test2() throws IOException, InterruptedException {
-		home = new HomePage(driver);
 		prop = new Properties();
 		FileReader readFile = new FileReader("./files/cred.properities");
 		prop.load(readFile);

@@ -21,8 +21,8 @@ public class CartPage {
 	}
 
 	public void close() throws InterruptedException {
-		Thread.sleep(5000);
+		Thread.sleep(7000);
 		close.click();
-		Thread.sleep(5000);
+		Thread.sleep(7000);
 	}
 }

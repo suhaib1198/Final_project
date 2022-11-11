@@ -12,7 +12,8 @@ public class PersonalInfo {
 		this.guest = driver.findElement(By.xpath("//*[@id=\"user_bar\"]/div/span[2]"));
 	}
 
-	public String Hello() {
+	public String Hello() throws InterruptedException {
+		Thread.sleep(3000);
 		return guest.getText();
 	}
 

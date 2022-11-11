@@ -18,11 +18,13 @@ public class ResultsPage {
 	}
 
 	public void Click() throws InterruptedException {
-		js.executeScript("window.scrollBy(0,720)", "");
-		Thread.sleep(10000);
+		Thread.sleep(3000);
+		js.executeScript("window.scrollBy(0,800)", "");
+		Thread.sleep(15000);
 		clk.click();
-		Thread.sleep(5000);
+		Thread.sleep(15000);
 		js.executeScript("window.scrollBy(0,400)", "");
+		Thread.sleep(3000);
 	}
 
 }
