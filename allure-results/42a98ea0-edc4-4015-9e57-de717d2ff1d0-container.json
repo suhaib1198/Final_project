@@ -1,0 +1,1 @@
+{"uuid":"42a98ea0-edc4-4015-9e57-de717d2ff1d0","name":"TestKSP.beforeMethod","children":["c5710ac1-f16f-4d06-a183-d260eac399f9"],"description":"","befores":[{"name":"beforeMethod","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1672999743725,"stop":1672999745538}],"afters":[],"start":1672999743725,"stop":1672999745538}

@@ -8,31 +8,55 @@ import org.openqa.selenium.WebElement;
 public class HomePage {
 	WebDriver driver;
 	JavascriptExecutor js;
-	WebElement loginlogo;
-	WebElement searchTxtBox;
-	WebElement searchBtn;
+	private WebElement loginlogo;
+	private WebElement searchTxtBox;
+	private WebElement searchBtn;
 
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
-		this.loginlogo = driver.findElement(By.xpath("//*[@id=\"site-header\"]/div[2]/div[3]/a[1]/button/span[1]/div"));
-	this.searchTxtBox = driver.findElement(By.xpath("//*[@id=\"site-header\"]/div[2]/div[2]/input"));
-	this.searchBtn = driver.findElement(By.xpath("//*[@id=\"site-header\"]/div[2]/div[2]/button"));
+		this.loginlogo = driver.findElement(By.xpath("//a[@target=\"_self\"]"));
+		this.searchTxtBox = driver.findElement(By.xpath("//div[@id=\"site-header\"]/div[2]/div[2]/input"));
+		this.searchBtn = driver.findElement(By.xpath("//button[@aria-label=\"לחץ לחיפוש\"]"));
 	}
-	
 
+	public WebElement getLoginlogo() {
+		return loginlogo;
+	}
 
-public void searchItem(String txt) throws InterruptedException {
-	this.searchTxtBox.sendKeys(txt);
-	Thread.sleep(5000);
-	this.searchBtn.click();
-	Thread.sleep(5000);
+	public void setLoginlogo(WebElement loginlogo) {
+		this.loginlogo = loginlogo;
+	}
 
-}
+	public WebElement getSearchTxtBox() {
+		return searchTxtBox;
+	}
+
+	public void setSearchTxtBox(WebElement searchTxtBox) {
+		this.searchTxtBox = searchTxtBox;
+	}
+
+	public WebElement getSearchBtn() {
+		return searchBtn;
+	}
+
+	public void setSearchBtn(WebElement searchBtn) {
+		this.searchBtn = searchBtn;
+	}
+
+	public void searchItem(String txt) throws InterruptedException {
+		try {
+			getSearchTxtBox().sendKeys(txt);
+			getSearchBtn().click();
+		} catch (Exception e) {
+			System.out.println("home page search item");
+		}
+	}
 
 	public void togo() throws InterruptedException {
-		Thread.sleep(5000);
-		loginlogo.click();
-		Thread.sleep(5000);
+		try {
+			getLoginlogo().click();
+		} catch (Exception e) {
+			System.out.println("home page togo");
+		}
 	}
-
 }

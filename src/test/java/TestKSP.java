@@ -1,5 +1,6 @@
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -47,12 +48,11 @@ public class TestKSP {
 		outputHeaders.add("price from search");
 		outputHeaders.add("price from cart");
 		driver.manage().window().maximize();
-		
-
 	}
 
 	@BeforeMethod
-	public void beforeMethod() {
+	public void beforeMethod() throws InterruptedException {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 		driver.get("https://ksp.co.il/web/");
 		takeScr = new TakeScreenShot(driver);
 		home = new HomePage(driver);
@@ -71,15 +71,15 @@ public class TestKSP {
 		return data;
 	}
 
-	@Test(dataProvider = "Data")
+	@Test(dataProvider = "Data", dependsOnMethods = "test2")
 	public void test1(String item) throws InterruptedException, IOException {
 		home.searchItem(item);
 		result = new ResultsPage(driver);
 		result.Click();
-		takeScr.takeScreenShot("./ScreenShots/"+item+"Search"+".png");
+		takeScr.takeScreenShot("./ScreenShots/" + item + "Search" + ".png");
 		items = new ItemPage(driver);
 		items.getCart();
-		takeScr.takeScreenShot("./ScreenShots/"+item+"Avilable"+".png");
+		takeScr.takeScreenShot("./ScreenShots/" + item + "Avilable" + ".png");
 		String listItem = items.getPriceItem();
 		stock = new StockPage(driver);
 		stock.putInCart();
@@ -87,15 +87,14 @@ public class TestKSP {
 		add.add();
 		cart = new CartPage(driver);
 		String listCard = cart.getPriceCart();
-		takeScr.takeScreenShot("./ScreenShots/"+item+"Card"+".png");
+		takeScr.takeScreenShot("./ScreenShots/" + item + "Card" + ".png");
 		cart.close();
 		String[] data = { item, listItem, listCard };
 		outputData.add(data);
 		Assert.assertEquals(listItem, listCard);
-
 	}
 
-	@Test(dependsOnMethods = "test1")
+	@Test
 	public void test2() throws IOException, InterruptedException {
 		prop = new Properties();
 		FileReader readFile = new FileReader("./files/cred.properities");
@@ -106,11 +105,11 @@ public class TestKSP {
 		log = new Login(driver);
 		log.login(email, password);
 		info = new PersonalInfo(driver);
-		myName="suhaib";
-		givenName=info.Hello().substring(0, myName.length());
-		Assert.assertEquals(givenName,myName );
-		
+		myName = "suhaib";
+		givenName = info.Hello().substring(0, myName.length());
+		Assert.assertEquals(givenName, myName);
 	}
+
 	@AfterSuite
 	public void afterSuite() {
 		driver.quit();
@@ -120,5 +119,4 @@ public class TestKSP {
 		}
 		WriteCsvFile.writeDataLineByLine("./files/output.csv", outputData, headers);
 	}
-
 }

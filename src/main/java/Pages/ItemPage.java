@@ -6,24 +6,48 @@ import org.openqa.selenium.WebElement;
 
 public class ItemPage {
 	WebDriver driver;
-	WebElement cart;
-	WebElement price;
+	private WebElement cart;
+	private WebElement price;
 
 	public ItemPage(WebDriver driver) {
 		this.driver = driver;
-		this.cart = driver.findElement(By.xpath("//*[@id=\"product-page-root\"]/div[2]/div[2]/div[5]/div/p/span/span"));
-		this.price = driver.findElement(By.xpath("//*[@id=\"product-page-root\"]/div[2]/div[2]/div[3]/div[1]/div"));
+		this.cart = driver.findElement(By.xpath("//h2[@aria-label=\"זמינות המוצר בסניפי KSP \"]//following-sibling::div/p"));
+		this.price = driver.findElement(By.xpath("//div[@data-id=\"top-product-page\"]//following-sibling::div[2]/div[1]/div"));
 
 	}
+	
+
+	public WebElement getPrice() {
+		return price;
+	}
+	public void setPrice(WebElement price) {
+		this.price = price;
+	}
+
+
+	public void setCart(WebElement cart) {
+		this.cart = cart;
+	}
+
 
 	public String getPriceItem() {
-		return price.getText().substring(1, 6);
+		try {
+			return getPrice().getText().substring(1, 6);
+		} catch (Exception e) {
+			System.out.println("item page price");
+		}
+		return null;
+		
 	}
 
-	public void getCart() throws InterruptedException {
-		Thread.sleep(5000);
+	public void getCart(){
+		try {
 		cart.click();
-		Thread.sleep(5000);
+		}
+		catch (Exception e) {
+		System.out.println("item page click");
+		}
+		
 	}
 
 }

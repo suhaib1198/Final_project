@@ -1,12 +1,8 @@
 package Core;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -14,25 +10,6 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 
 
 public class OpenBrowsers {
-	public static WebDriver openchromeWithOptions() {
-		WebDriver driver;
-		System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver.exe");
-		String downloadFilepath = "downloads";
-		File file = new File(downloadFilepath);
-		
-		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
-		chromePrefs.put("profile.default_content_settings.popups", 0);
-		chromePrefs.put("download.default_directory", file.getAbsolutePath());
-		ChromeOptions options = new ChromeOptions();
-		options.setExperimentalOption("prefs", chromePrefs);
-		options.addArguments("--start-maximized");
-		options.addArguments("--headless");
-		options.addArguments("--disable-infobars");
-
-		driver = new ChromeDriver(options);
-		return driver;
-	}
-	
 	public static WebDriver openFFWithOptions() {
 		WebDriver driver;
 		System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver.exe");
@@ -89,10 +66,5 @@ public class OpenBrowsers {
 	}
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		WebDriver driver = OpenBrowsers.openFFWithOptions();
-		driver.get("https://people.sc.fsu.edu/~jburkardt/data/csv/csv.html");
-		TakeScreenShot takeSc = new TakeScreenShot(driver);
-		takeSc.takeScreenShot("downloads/Test.jpg");
-		driver.findElement(By.linkText("cities.csv")).click();
 	}
 }

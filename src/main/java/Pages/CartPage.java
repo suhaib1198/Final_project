@@ -6,23 +6,49 @@ import org.openqa.selenium.WebElement;
 
 public class CartPage {
 	WebDriver driver;
-	WebElement close;
+	private WebElement close;
+	private WebElement price;
 
 	public CartPage(WebDriver driver) {
 		this.driver = driver;
-		this.close = driver.findElement(By.xpath("//*[@id=\"site-main\"]/div[6]/div[1]/div/div[2]/ol/li/div/div[1]/a"));
+		this.close = driver.findElement(By.xpath("//a[starts-with(@class,\"action\")]"));
+		this.price = driver.findElement(By.xpath("//div[@id=\"totalPriceInFinishOrder\"]//span[2]"));
+	}
+
+	public WebElement getPrice() {
+		return price;
+	}
+
+	public void setPrice(WebElement price) {
+		this.price = price;
+	}
+
+	public WebElement getClose() {
+		return close;
+	}
+
+	public void setClose(WebElement close) {
+		this.close = close;
 	}
 
 	public String getPriceCart() {
+		try {
+			return getPrice().getText().substring(0, 5);
+		} catch (Exception e) {
+			System.out.println("cat page>>>price");
+		}
+		return null;
 
-		WebElement price = driver.findElement(
-				By.xpath("//*[@id=\"site-main\"]/div[6]/div[1]/div/div[2]/ol/li[1]/div/div[2]/div/div/div[3]/span[2]"));
-		return price.getText().substring(0, 5);
 	}
 
-	public void close() throws InterruptedException {
-		Thread.sleep(7000);
-		close.click();
-		Thread.sleep(7000);
+	public void close(){
+
+		try {
+			getClose().click();
+		} catch (Exception e) {
+			System.out.println("cart page>>>>>closing");
+		}
+		
+
 	}
 }

@@ -7,24 +7,32 @@ import org.openqa.selenium.WebElement;
 
 public class ResultsPage {
 	WebDriver driver;
-	WebElement clk;
+	private WebElement clk;
 	JavascriptExecutor js;
 
 	public ResultsPage(WebDriver driver) {
 		this.driver = driver;
-		this.clk = driver.findElement(By.xpath("//*[@id=\"select-root\"]/div[2]/div[2]/div/div[1]/div/div[5]/a"));
+		this.clk = driver.findElement(
+				By.xpath("//*[@id=\"select-root\"]/div[2]/div[2]/div/div[1]/div/div[1]/div/a/div[2]/img "));
 		this.js = (JavascriptExecutor) driver;
+	}
 
+	public WebElement getClk() {
+		return clk;
+	}
+
+	public void setClk(WebElement clk) {
+		this.clk = clk;
 	}
 
 	public void Click() throws InterruptedException {
-		Thread.sleep(3000);
-		js.executeScript("window.scrollBy(0,800)", "");
-		Thread.sleep(15000);
-		clk.click();
-		Thread.sleep(15000);
-		js.executeScript("window.scrollBy(0,400)", "");
-		Thread.sleep(3000);
-	}
+		try {
+			js.executeScript("window.scrollBy(0,750)", "");
+			getClk().click();
+			js.executeScript("window.scrollBy(0,550)", "");
+		} catch (Exception e) {
+			System.out.println("result page");
+		}
 
+	}
 }

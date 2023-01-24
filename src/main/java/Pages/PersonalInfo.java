@@ -6,15 +6,29 @@ import org.openqa.selenium.WebElement;
 
 public class PersonalInfo {
 	WebDriver driver;
-	WebElement guest;
+	private WebElement guest;
+
 	public PersonalInfo(WebDriver driver) {
 		this.driver = driver;
 		this.guest = driver.findElement(By.xpath("//*[@id=\"user_bar\"]/div/span[2]"));
 	}
 
+	public WebElement getGuest() {
+		return guest;
+	}
+
+	public void setGuest(WebElement guest) {
+		this.guest = guest;
+	}
+
 	public String Hello() throws InterruptedException {
-		Thread.sleep(3000);
-		return guest.getText();
+		try {
+			return getGuest().getText();
+		} catch (Exception e) {
+			System.out.println("personal");
+		}
+		return null;
+
 	}
 
 }
